@@ -56,7 +56,7 @@ export default function UrlForm({ onShorten }: UrlFormProps) {
             placeholder="Paste your long URL here..."
             required
             className={cn(
-              "w-full px-6 py-4 text-lg bg-zinc-900 border border-zinc-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-zinc-500",
+              "w-full px-6 py-4 text-lg bg-zinc-900 border border-zinc-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-zinc-500 text-white",
               error ? "border-red-500 ring-2 ring-red-500/20" : ""
             )}
           />

@@ -48,7 +48,7 @@ export default function QrCard({ qrCode, shortUrl }: QrCardProps) {
           >
             {downloaded ? (
               <>
-                <FiCheck className="w-5 h-5" /> Saved to Gallery
+                <Check className="w-5 h-5" /> Saved to Gallery
               </>
             ) : (
               <>

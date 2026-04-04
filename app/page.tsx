@@ -30,7 +30,12 @@ export default function Home() {
         </div>
         
         <div className="flex items-center gap-6">
-          <a href="https://github.com/harshil/shorty" className="text-zinc-500 hover:text-white transition-colors">
+          <a 
+            href="https://github.com/harshil/shorty" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-zinc-500 hover:text-white transition-colors"
+          >
             <FiGithub className="w-5 h-5" />
           </a>
           <button className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 hover:border-zinc-700 text-sm font-semibold transition-all">
