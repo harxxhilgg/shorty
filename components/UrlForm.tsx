@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { FiArrowRight, FiLoader } from "react-icons/fi";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { cn, isValidUrl } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface UrlFormProps {
   onShorten: (data: { shortUrl: string; shortCode: string; remaining: number }) => void;
@@ -39,6 +41,7 @@ export default function UrlForm({ onShorten }: UrlFormProps) {
         setUrl("");
       }
     } catch (err) {
+      console.error(err);
       setError("Network error. Please try again.");
     } finally {
       setLoading(false);
@@ -46,36 +49,38 @@ export default function UrlForm({ onShorten }: UrlFormProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="relative group">
-          <input
+        <div className="flex items-center gap-2">
+          <Input
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Paste your long URL here..."
             required
             className={cn(
-              "w-full px-6 py-4 text-lg bg-zinc-900 border border-zinc-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-zinc-500 text-white",
-              error ? "border-red-500 ring-2 ring-red-500/20" : ""
+              "h-14 px-6 text-lg rounded-3xl transition-all placeholder:text-muted-foreground",
+              error ? "border-destructive ring-2 ring-destructive/20" : ""
             )}
           />
-          <button
+
+          <Button
             type="submit"
             disabled={loading}
-            className="absolute right-2 top-2 bottom-2 px-6 bg-blue-600 hover:bg-blue-500 disabled:bg-zinc-700 text-white rounded-xl font-medium transition-all flex items-center gap-2 group-hover:px-8"
+            className="px-6 rounded-3xl font-medium cursor-pointer h-14"
           >
             {loading ? (
-              <FiLoader className="w-5 h-5 animate-spin" />
+              <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
               <>
-                Shorten <FiArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </>
             )}
-          </button>
+          </Button>
         </div>
+
         {error && (
-          <p className="text-red-400 text-sm px-4 animate-in fade-in slide-in-from-top-1">
+          <p className="text-destructive text-sm px-4 animate-in fade-in slide-in-from-top-1">
             {error}
           </p>
         )}

@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import UrlForm from "@/components/UrlForm";
 import ResultCard from "@/components/ResultCard";
-import { FiLink, FiZap, FiGithub, FiGlobe } from "react-icons/fi";
+import { ModeToggle } from "@/components/ModeToggle";
+import { Link2, Sparkles } from "lucide-react";
+import { SiGithub } from "react-icons/si";
+import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
+import Image from "next/image";
 
 export default function Home() {
   const [result, setResult] = useState<{
@@ -11,50 +16,60 @@ export default function Home() {
     shortCode: string;
     remaining: number;
   } | null>(null);
+  const { resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use local assets from /public
+  const monsterIcon = resolvedTheme === "dark"
+    ? "/monster-energy-energy-drink-fizzy-drinks-carbonated-water-drink-can-drink-1bce7fb5d56077dba2ee3df418958421.png"
+    : "/monster-regular.png";
 
   return (
-    <main className="min-h-screen bg-[#09090b] text-zinc-100 flex flex-col items-center selection:bg-blue-500/30 selection:text-white relative overflow-hidden">
-      {/* Background Gradients */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-250 h-150 bg-blue-500/10 blur-[120px] rounded-full -z-10" />
-      <div className="absolute -bottom-48 -right-48 w-150 h-150 bg-purple-500/5 blur-[100px] rounded-full -z-10" />
+    <main className="min-h-screen flex flex-col items-center selection:bg-primary/30 selection:text-white relative overflow-hidden transition-colors duration-300">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-250 h-150 blur-[120px] rounded-full -z-10 bg-transparent opacity-0 mix-blend-overlay hidden" />
+      <div className="absolute -bottom-48 -right-48 w-150 h-150 bg-secondary/5 blur-[100px] rounded-full -z-10 opacity-0 mix-blend-overlay hidden" />
 
-      {/* Header / Nav */}
       <header className="w-full max-w-7xl mx-auto px-6 py-8 flex items-center justify-between">
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="bg-blue-600 p-2.5 rounded-xl shadow-xl shadow-blue-500/20 group-hover:scale-110 transition-transform duration-300">
-            <FiLink className="w-6 h-6 text-white" strokeWidth={2.5} />
+        <div className="flex items-center gap-2 cursor-default">
+          <div className="bg-primary p-2 rounded-2xl">
+            <Link2 className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
           </div>
-          <h1 className="text-2xl font-black tracking-tight text-white group-hover:text-blue-400 transition-colors">
-            Shorty<span className="text-blue-500">.</span>
+
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            Shorty<span className="text-primary">.</span>
           </h1>
         </div>
 
-        <div className="flex items-center gap-6">
-          <a
-            href="https://github.com/harshil/shorty"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-zinc-500 hover:text-white transition-colors"
-          >
-            <FiGithub className="w-5 h-5" />
-          </a>
-          <button className="hidden md:flex items-center gap-2 px-5 py-2.5 bg-zinc-900 border border-zinc-800 rounded-xl hover:bg-zinc-800 hover:border-zinc-700 text-sm font-semibold transition-all">
-            <FiGlobe className="w-4 h-4 text-zinc-400" /> API Access
-          </button>
+        <div className="flex items-center gap-3 md:gap-4">
+          <Button variant="ghost" size="icon" asChild>
+            <a
+              href="https://github.com/harxxhilgg/shorty"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <SiGithub className="w-5 h-5" />
+            </a>
+          </Button>
+
+          <ModeToggle />
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="w-full max-w-4xl mx-auto px-6 py-12 md:py-24 text-center space-y-12">
         <div className="space-y-6 animate-in fade-in slide-in-from-top-4 duration-1000 fill-mode-both">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs font-bold uppercase tracking-[0.2em]">
-            <FiZap className="w-3.5 h-3.5" /> Fast • Secure • Free
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-xs font-bold uppercase tracking-[0.2em]">
+            <Sparkles className="w-3.5 h-3.5" /> Fast • Secure • Free
           </div>
-          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] bg-linear-to-b from-white to-zinc-500 bg-clip-text text-transparent">
+          <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1] bg-linear-to-b from-foreground to-muted-foreground bg-clip-text text-transparent">
             Shorten your links, <br className="hidden md:block" />
-            <span className="text-white">amplify your reach.</span>
+            <span className="text-foreground">amplify your reach.</span>
           </h2>
-          <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
             Beautifully simple URL shortening with built-in QR codes.
             No sign-up required, just paste and go.
           </p>
@@ -68,23 +83,28 @@ export default function Home() {
               shortUrl={result.shortUrl}
               shortCode={result.shortCode}
             />
-            <p className="text-zinc-500 text-sm font-medium animate-in fade-in duration-1000 delay-500 fill-mode-both">
-              Daily uses remaining: <span className="text-blue-500 font-bold">{result.remaining}</span>
+            <p className="text-muted-foreground text-sm font-medium animate-in fade-in duration-1000 delay-500 fill-mode-both">
+              Daily uses remaining: <span className="text-primary font-semibold">{result.remaining}</span>
             </p>
           </div>
         )}
       </section>
 
-      {/* Footer */}
-      <footer className="mt-auto w-full max-w-7xl mx-auto px-6 py-12 border-t border-zinc-900 flex flex-col md:flex-row items-center justify-between gap-6">
-        <p className="text-zinc-600 text-sm font-medium">
-          © {new Date().getFullYear()} Shorty URL Shortener. Built with Next.js 16.
+      <footer className="mt-auto w-full max-w-7xl mx-auto px-6 py-12 flex items-center justify-center gap-2">
+        <p className="text-muted-foreground text-xs flex items-center gap-1.5">
+          © {new Date().getFullYear()} Shorty. Built with lots of
+          {mounted && (
+            <span className="relative w-7 h-7 -mt-1 -ml-1 inline-block transition-transform">
+              <Image
+                src={monsterIcon}
+                alt="Monster Energy"
+                fill
+                sizes="32px"
+                className="object-contain size-0"
+              />
+            </span>
+          )}
         </p>
-        <div className="flex items-center gap-8">
-          <a href="#" className="text-zinc-600 hover:text-zinc-300 text-xs font-bold uppercase tracking-widest transition-colors">Terms</a>
-          <a href="#" className="text-zinc-600 hover:text-zinc-300 text-xs font-bold uppercase tracking-widest transition-colors">Privacy</a>
-          <a href="#" className="text-zinc-600 hover:text-zinc-300 text-xs font-bold uppercase tracking-widest transition-colors">Contact</a>
-        </div>
       </footer>
     </main>
   );
