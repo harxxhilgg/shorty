@@ -65,7 +65,7 @@ export default function ResultCard({ shortUrl }: ResultCardProps) {
             <div className="space-y-2 flex-1">
               <p className="text-left text-muted-foreground text-sm font-medium uppercase tracking-wider">Your Short URL</p>
               <div className="flex items-center gap-2 group">
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground selection:bg-primary/30 truncate">
+                <h2 className="text-2xl md:text-2xl font-bold text-foreground selection:bg-primary/30 truncate">
                   {shortUrl.replace("https://", "")}
                 </h2>
 
